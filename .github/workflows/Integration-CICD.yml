@@ -1,0 +1,42 @@
+name: project-APIGEE-Integrations-Pipeline
+run-name: ${{ github.actor }} ran pipeline for APIGEE Integration deployment.
+on:
+  workflow_call:
+jobs:
+  Notify_On_Slack_for_approval:
+    uses: ./.github/workflows/Notify-On-Slack.yml
+    with:
+      workflow_status: Awaiting for Reviewer Approval
+    secrets: inherit
+  
+  Dev_Deployment_worflow:
+    # needs: Notify_On_Slack_for_approval
+    if: github.base_ref == 'development'
+    uses: ./.github/workflows/Integration-Deploy.yml
+    with:
+      apigee-environment: development
+    secrets: inherit    
+
+  Stagging_Deployment_worflow:
+    needs: Notify_On_Slack_for_approval
+    if: github.base_ref == 'staging'
+    uses: ./.github/workflows/Integration-Deploy.yml
+    with:
+      apigee-environment: staging
+    secrets: inherit
+
+  Production_Deployment_worflow:
+    needs: Notify_On_Slack_for_approval
+    if: github.base_ref == 'production'
+    uses: ./.github/workflows/Integration-Deploy.yml
+    with:
+      apigee-environment: production
+    secrets: inherit
+  
+  Notify_Workflow_Status_On_Slack:
+    if: always()
+    needs: [Stagging_Deployment_worflow, Production_Deployment_worflow, Dev_Deployment_worflow ]
+    uses: ./.github/workflows/Notify-On-Slack.yml
+    with:
+      workflow_status: ${{needs.Dev_Deployment_worflow.outputs.step-status}}${{needs.Production_Deployment_worflow.outputs.step-status}}${{ needs.Stagging_Deployment_worflow.outputs.step-status }}
+    secrets: inherit
