@@ -18,14 +18,14 @@
 #### Automatic repo creator
 > This workflow creates repository for given apigee component type along with all required configurations for CICD pipeline.
 
-#### APIGEE Proxy
-> This workflow deploys and undeploys the apigee proxies in to different environments of APIGEE in GCP.
+#### APIGEE Target servers
+> This workflow deploys and undeploys the apigee Target servers in to different environments of APIGEE in GCP.
 
-#### APIGEE Shared Flows
-> This workflow deploys and undeploys the apigee shared flows in to different environments of APIGEE in GCP.
+#### APIGEE Products
+> This workflow deploys and undeploys the apigee Products in to different environments of APIGEE in GCP.
 
-#### APIGEE Integrations
-> This workflow deploys and undeploys the apigee Integrations in to different environments of APIGEE in GCP.
+#### APIGEE KVMS
+> This workflow deploys and undeploys the apigee KVMS in to different environments of APIGEE in GCP.
 
 ## Getting Started
 

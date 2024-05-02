@@ -1,5 +1,5 @@
-name: project-APIGEE-Integrations-Pipeline
-run-name: ${{ github.actor }} ran pipeline for APIGEE Integration deployment.
+name: project-APIGEE-Product-Pipeline
+run-name: ${{ github.actor }} ran pipeline for APIGEE Product deployment.
 on:
   workflow_call:
 jobs:
@@ -10,9 +10,9 @@ jobs:
     secrets: inherit
   
   Dev_Deployment_worflow:
-    # needs: Notify_On_Slack_for_approval
+    needs: Notify_On_Slack_for_approval
     if: github.base_ref == 'development'
-    uses: ./.github/workflows/Integration-Deploy.yml
+    uses: ./.github/workflows/Product-Deploy.yml
     with:
       apigee-environment: development
     secrets: inherit    
@@ -20,7 +20,7 @@ jobs:
   Stagging_Deployment_worflow:
     needs: Notify_On_Slack_for_approval
     if: github.base_ref == 'staging'
-    uses: ./.github/workflows/Integration-Deploy.yml
+    uses: ./.github/workflows/Product-Deploy.yml
     with:
       apigee-environment: staging
     secrets: inherit
@@ -28,7 +28,7 @@ jobs:
   Production_Deployment_worflow:
     needs: Notify_On_Slack_for_approval
     if: github.base_ref == 'production'
-    uses: ./.github/workflows/Integration-Deploy.yml
+    uses: ./.github/workflows/Product-Deploy.yml
     with:
       apigee-environment: production
     secrets: inherit
